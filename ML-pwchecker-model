@@ -1,0 +1,52 @@
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+def read_csv(): ##open. read. and clean csv
+    data = pd.read_csv("data.csv", on_bad_lines='skip')
+    return data
+
+def convert_strength_num_to_string(data): ##strength is measured with numbers, we are changing this to strings
+    data = data.dropna().copy()
+    data.loc[:,"strength"] = data["strength"].map({0: "Weak", 
+                                                   1: "Medium", 2: "Strong"})
+    return data
+
+def word(password):
+    return list(password)  # More efficient than using a loop
+
+def cleaned_data_output():
+    data = read_csv()   
+    cleaned_data = convert_strength_num_to_string(data)  
+    return cleaned_data
+
+def pwstrength_training_model():  
+    data = cleaned_data_output()
+
+    x = np.array(data["password"])  #split into pw and its strength
+    y = np.array(data["strength"]) 
+
+    split_by_char = TfidfVectorizer(analyzer='char') #split the pw by character
+    x = split_by_char.fit_transform(x)
+    xtrain, xtest, ytrain, ytest = train_test_split(x, y, 
+                                                    test_size=0.1, 
+                                                    random_state=50)
+    print(f"Training samples: {xtrain.shape[0]}, Testing samples: {xtest.shape[0]}")
+    model = RandomForestClassifier(n_estimators=50, random_state=25, n_jobs=-1)
+    model.fit(xtrain, ytrain)
+    return model, split_by_char
+    
+def user_input_option(model, split_by_char):
+    user_password = input("Enter Password: ")
+    data = split_by_char.transform([user_password]).toarray()
+    output = model.predict(data)
+    print(f"Password strength: {output[0]}")
+
+
+model, split_by_char = pwstrength_training_model()
+
+
+user_input_option(model, split_by_char)
