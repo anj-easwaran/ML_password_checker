@@ -46,7 +46,7 @@ pip install pandas numpy scikit-learn tkinter
    python password_checker.py
    ```
 
-## 📌 How It Works
+## How It Works
 1. Reads `data.csv` containing passwords and their strength labels.
 2. Uses TF-IDF Vectorization to transform passwords and trains Random Forest Classifier.
 3. Users enter a password in the Tkinter GUI.
