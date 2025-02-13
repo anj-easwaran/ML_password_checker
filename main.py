@@ -36,6 +36,7 @@ def pwstrength_training_model():  #split data to training and testing
                                                     random_state=50)
 
     print(f"Training samples: {xtrain.shape[0]}, Testing samples: {xtest.shape[0]}")
+    print("Training your ML model, this may take a couple of minutes, please be patient:D")
 
     model = RandomForestClassifier(n_estimators=50, random_state=25, n_jobs=-1)
     model.fit(xtrain, ytrain)    
@@ -96,3 +97,8 @@ strength_label.place(x=200,
                      y=200)
 
 window.mainloop()
+
+
+######________________________________________________________________________######
+#  on update, save model and train if new data is added
+#  NLP to explain why passwords are weak/strong
