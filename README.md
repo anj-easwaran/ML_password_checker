@@ -31,19 +31,19 @@ The script uses multi-core processing to speed up the model-building process.
 ### Prerequisites
 Ensure you have **Python 3.7+** installed. Install dependencies with:
 ```bash
-pip install pandas numpy scikit-learn tkinter
+pip install pandas numpy scikit-learn tk
 ```
 
 ### Running the Application
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/password-strength-checker.git
-   cd password-strength-checker
+   git clone https://github.com/anj-easwaran/ML_password_checker.git
+   cd ML_password_checker
    ```
 2. Place your dataset (`data.csv`) in the project directory.
 3. Run the application:
    ```bash
-   python password_checker.py
+   python main.py
    ```
 
 ## How It Works
